@@ -1,19 +1,19 @@
 <template>
   <div>
     <div id="dianpuFood">
-      <div class="dianpu_main_l">
+      <div class="dianpu_main_l" ref="menuWrapper">
         <ul class="dianpu_foods_menu">
-          <li class="dianpu_foods_list" v-for="item in dianpuData">
+          <li class="dianpu_foods_list" v-for="(item,index) in dianpuData" @click="selectMenu(index)">
           {{item.name}}
           </li>
        </ul>
     </div>
-      <div class="dianpu_main_r">
+      <div class="dianpu_main_r" ref="foodsWrapper">
       <ul class="dianpu_main_foods">
         <li class="dianpu_main_foods_list" v-for="(foodList,indexP) in dianpuData">
           <span class="dianpu_main_foods_list_name">{{foodList.name}}</span>
           <ul class="dianpu_main_foods_child">
-            <li class="dianpu_main_foods_childList" v-for="(food,indexC) in foodList.foods">
+            <li class="dianpu_main_foods_childList food-list-hook" v-for="(food,indexC) in foodList.foods">
               <div class="dianpu_main_food_div">
                 <div class="dianpu_main_food_div_l">
                   <router-link :to="{name:'foodDetails',params:{indexp:indexP,indexc:indexC}}"><img class="food_img" :src=food.icon></router-link>
@@ -48,6 +48,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import bScroll from "better-scroll";
   import dataInfo from '@/components/dataInfo'
   export default{
     name:"dianpuMain",
@@ -70,7 +71,10 @@
           }
         }
         this.allData=dataInfo.data;
-        console.log(this.allData);
+      });
+      this.$nextTick(function (){
+        //发生更新后要执行的事件
+        this._initScroll()
       });
     },
     data(){
@@ -95,6 +99,19 @@
       }
     },
     methods:{
+      selectMenu:function (index){
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el,300)
+      },
+      _initScroll:function (){
+        this.meunScroll = new bScroll(this.$refs.menuWrapper, {
+          click:true
+        })
+        this.foodsScroll = new bScroll(this.$refs.foodsWrapper, {
+          click:true
+        })
+      },
       addNum:function (indexP,indexC){
           this.allData[indexP].content[indexC].btnShow=true;
           this.allData[indexP].content[indexC].number++;
@@ -130,7 +147,6 @@
         this.allprice=dataInfo.totalPrice;
       }
     }
-
   }
 </script>
 <style scoped>
@@ -151,7 +167,7 @@
   }
   .dianpu_main_r{
     flex:5;
-    height:100%;
+    height:350px;
     display:flex;
     flex-direction:column;
   }
@@ -161,7 +177,7 @@
     padding:0px;
   }
   .dianpu_foods_list{
-    height: 27.1px;
+    height: 27.6px;
     font-size:12px;
     width:100%;
     text-align:center;

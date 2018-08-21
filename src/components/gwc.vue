@@ -23,7 +23,7 @@
         <span>结算{{total}}元</span>
       </div>
       <div class="fixed_r">
-        <span>提交订单</span>
+        <span><router-link :to="action1">提交订单</router-link></span>
       </div>
     </div>
   </div>
@@ -38,17 +38,18 @@
         icon:"&#xf0292;",
         total:0,
         foodData:[],
-        action:"/sg"
+        action:"/sg",
+        action1:"/"
       }
     },
     created:function (){
       for(var i=0;i<dataInfo.usercart.length;i++){
         this.foodData.push(dataInfo.usercart[i]);
       }
-    }
+    },
   }
 </script>
-<style scoped>
+<style scoped lang="less">
   .gwc_top{
     width:320px;
     height:50px;
@@ -101,6 +102,9 @@
     display:block;
     width:100%;
     height:auto;
+    a{
+      color:#3AC0B5;
+    }
   }
   .span_Name{
     font-size:14px;

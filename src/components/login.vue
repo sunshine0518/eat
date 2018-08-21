@@ -11,7 +11,7 @@
       <input type="button" value="登录" id="login"/>
       <div class="op">
         <span class="forget">忘记密码</span>
-        <span class="goRes">立即注册</span>
+        <span class="goRes"><router-link :to="actionR">立即注册</router-link></span>
       </div>
     </div>
   </div>
@@ -23,12 +23,13 @@
       return {
           action:'/',
           icon1:"&#xf0161;",
-          icon2:"&#xf0292;"
+          icon2:"&#xf0292;",
+          actionR:"/register"
       }
     }
   }
 </script>
-<style>
+<style lang="less">
   .login_top{
     height:50px;
     width:320px;
@@ -94,5 +95,8 @@
     font-size:12px;
     color:#3AC0B5;
     float:right;
+    a{
+      color:#3AC0B5;
+    }
   }
 </style>

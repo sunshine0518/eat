@@ -7,6 +7,9 @@ import my from '@/components/my'
 import login from '@/components/login'
 import register from '@/components/register'
 import foodDetails from '@/components/foodDetails'
+import pj from '@/components/pj'
+import dianpuMain from '@/components/dianpuMain'
+import sj from '@/components/sj'
 
 Vue.use(Router)
 
@@ -20,7 +23,25 @@ export default new Router({
     {
       path: '/sg',
       name: 'sg',
-      component: sg
+      component: sg,
+      redirect: 'dianpuMain',//设置默认路由
+      children:[
+        {
+          path: '/dianpuMain',
+          name: 'dianpuMain',
+          component: dianpuMain
+        },
+        {
+          path: '/pj',
+          name: 'pj',
+          component: pj
+        },
+        {
+          path: '/sj',
+          name: 'sj',
+          component: sj
+        },
+      ]
     },
     {
       path: '/gwc',
@@ -46,7 +67,6 @@ export default new Router({
       path: '/foodDetails',
       name: 'foodDetails',
       component: foodDetails
-    }
-
+    },
   ]
 })
